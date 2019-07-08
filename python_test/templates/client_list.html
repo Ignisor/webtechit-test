@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Clients</h1>
+<a href="{% url 'client-create' %}">Create new client</a>
+
+<h3>Search:</h3>
+
+<form method="get">
+    {{ search_form.as_p }}
+    <p>
+        <label for="id_order">Order by:</label>
+        <select name="order_by" id="id_order">\
+            {% for order_field in order_fields %}
+                <option value="{{ order_field }}">{{ order_field }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <input type="submit" value="Apply">
+</form>
+<br>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Contact name</th>
+        <th>Actions</th>
+    </tr>
+    {% for client in object_list %}
+        <tr>
+            <td>{{ client.name }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone }}</td>
+            <td>{{ client.address }}</td>
+            <td>{{ client.contact_name }}</td>
+            <td><a href="{% url 'client-update' pk=client.pk %}">Edit</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
